@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophical Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #e94560;
+        }
+        p {
+            margin: 20px auto;
+            width: 80%;
+            line-height: 1.6;
+            font-size: 18px;
+        }
+        button {
+            background-color: #16213e;
+            color: #ffffff;
+            border: 2px solid #e94560;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #e94560;
+            color: #1a1a2e;
+        }
+        #game-container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Forum of Eternity</h1>
+    <div id="game-container">
+        <p id="game-text">You find yourself in the Forum of Eternity. A voice echoes: "Will you embark on a journey to uncover the Ultimate Truth?"</p>
+        <button onclick="nextStep('accept')">Accept the Journey</button>
+        <button onclick="nextStep('decline')">Decline</button>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="background-music" src="background.mp3" loop autoplay></audio>
+    <!-- Click Sound -->
+    <audio id="click-sound" src="click.mp3"></audio>
+
+    <script>
+        // Get audio elements
+        const backgroundMusic = document.getElementById("background-music");
+        const clickSound = document.getElementById("click-sound");
+
+        function playClickSound() {
+            clickSound.currentTime = 0; // Reset to the start
+            clickSound.play();
+        }
+
+        function nextStep(choice) {
+            playClickSound(); // Play click sound on every choice
+            const gameText = document.getElementById("game-text");
+            const container = document.getElementById("game-container");
+
+            if (choice === "accept") {
+                gameText.innerHTML = "You chose to embark on the journey. Welcome to the Realm of Ethics. A village leader asks: 'Should one be sacrificed to save many?'";
+                container.innerHTML = `
+                    <button onclick="nextStep('sacrifice')">Sacrifice One</button>
+                    <button onclick="nextStep('refuse')">Refuse</button>
+                `;
+            } else if (choice === "decline") {
+                gameText.innerHTML = "You declined. The journey ends. Perhaps some questions are better left unanswered...";
+                container.innerHTML = <button onclick="restartGame()">Restart Game</button>;
+            } else if (choice === "sacrifice") {
+                gameText.innerHTML = "You sacrificed one to save many. The town thrives, but the burden of your choice lingers. Next, you enter the Realm of Metaphysics.";
+                container.innerHTML = `
+                    <button onclick="nextStep('idealism')">Reality is Perception (Idealism)</button>
+                    <button onclick="nextStep('realism')">Reality Exists Independently (Realism)</button>
+                `;
+            } else if (choice === "refuse") {
+                gameText.innerHTML = "You refused to harm an innocent. The town is destroyed, but your moral integrity remains intact. Next, you enter the Realm of Metaphysics.";
+                container.innerHTML = `
+                    <button onclick="nextStep('idealism')">Reality is Perception (Idealism)</button>
+                    <button onclick="nextStep('realism')">Reality Exists Independently (Realism)</button>
+                `;
+            } else if (choice === "idealism") {
+                gameText.innerHTML = "You chose Idealism. Reality bends to your perception. Finally, you face the Ultimate Question: What is the meaning of life?";
+                container.innerHTML = `
+                    <button onclick="nextStep('utilitarian')">To Seek Happiness for All</button>
+                    <button onclick="nextStep('deontologist')">To Act Morally, Regardless of Outcome</button>
+                    <button onclick="nextStep('existentialist')">To Create Your Own Meaning</button>
+                `;
+            } else if (choice === "realism") {
+                gameText.innerHTML = "You chose Realism. Reality reveals its stable, independent nature. Finally, you face the Ultimate Question: What is the meaning of life?";
+                container.innerHTML = `
+                    <button onclick="nextStep('utilitarian')">To Seek Happiness for All</button>
+                    <button onclick="nextStep('deontologist')">To Act Morally, Regardless of Outcome</button>
+                    <button onclick="nextStep('existentialist')">To Create Your Own Meaning</button>
+                `;
+            } else if (choice === "utilitarian") {
+                gameText.innerHTML = "You chose Utilitarianism. You value collective happiness above all else. Congratulations! You have uncovered one possible truth.";
+                container.innerHTML = <button onclick="restartGame()">Play Again</button>;
+            } else if (choice === "deontologist") {
+                gameText.innerHTML = "You chose Deontology. You value integrity and moral action above outcomes. Congratulations! You have uncovered one possible truth.";
+                container.innerHTML = <button onclick="restartGame()">Play Again</button>;
+            } else if (choice === "existentialist") {
+                gameText.innerHTML = "You chose Existentialism. You believe meaning is subjective and personal. Congratulations! You have uncovered one possible truth.";
+                container.innerHTML = <button onclick="restartGame()">Play Again</button>;
+            }
+        }
+
+        function restartGame() {
+            location.reload(); // Reloads the page to restart the game
+        }
+    </script>
+</body>
+</html>
